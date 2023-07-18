@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from.models import Blog
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -15,6 +16,8 @@ def home(request):
 
     return render(request,'index.html',blog)
 
+
+@login_required(login_url="login")
 def content(request,id):
     blog = Blog.objects.get(id=id)
 
@@ -60,4 +63,4 @@ def Log_in(request):
 
 def Log_out(request):
     logout(request)
-    return redirect("login")
+    return redirect("home")
